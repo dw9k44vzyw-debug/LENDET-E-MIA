@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lëndët e mia</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b16;--panel:rgba(255,255,255,.055);--ink:#eef0ff;--mute:#9aa0c3;--line:rgba(255,255,255,.1);--acc:#8b7bff;--acc2:rgba(139,123,255,.16);--warn:#ff7a90;--c:#8b7bff;--ease:cubic-bezier(.2,.8,.2,1);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Manrope,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0;font-weight:700;letter-spacing:-.01em}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(90px);opacity:.42;animation:drift 26s ease-in-out infinite alternate}
+.aurora i:nth-child(1){background:#6a4dff;top:-20vmax;left:-12vmax}
+.aurora i:nth-child(2){background:#12b5d6;bottom:-24vmax;right:-14vmax;animation-delay:-9s;opacity:.3}
+.aurora i:nth-child(3){background:#e0508f;top:30%;left:45%;width:34vmax;height:34vmax;animation-delay:-17s;opacity:.2}
+@keyframes drift{to{transform:translate(9vmax,6vmax) scale(1.18)}}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:7px 14px;transition:.25s var(--ease)}
+button:hover{border-color:rgba(255,255,255,.28);transform:translateY(-1px);background:rgba(255,255,255,.09)}
+button:active{transform:scale(.97)}
+button.p{border:0;color:#fff;font-weight:600;background:linear-gradient(120deg,#8b7bff,#5b8cff,#8b7bff);background-size:200% 100%;box-shadow:0 6px 22px -6px rgba(112,96,255,.75)}
+button.p:hover{background-position:100% 0;box-shadow:0 10px 28px -6px rgba(112,96,255,.9)}
+button.x{color:var(--warn);border:0;background:none;padding:5px 9px}
+button.x:hover{background:rgba(255,122,144,.12)}
+input,textarea{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:10px;padding:9px 12px;transition:.25s}
+input::placeholder,textarea::placeholder{color:var(--mute)}
+input:focus,textarea:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 4px var(--acc2)}
+button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.app{position:relative;z-index:1;display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+aside{background:rgba(12,13,28,.55);backdrop-filter:blur(22px);border-right:1px solid var(--line);padding:26px 16px;display:flex;flex-direction:column;gap:18px;animation:slide .9s var(--ease) both}
+@keyframes slide{from{opacity:0;transform:translateX(-24px)}}
+aside h1{font-size:23px;display:flex;align-items:center;gap:12px}
+.logo{width:28px;height:28px;border-radius:9px;background:conic-gradient(from 0deg,#8b7bff,#3fd8e8,#ff7ab6,#8b7bff);animation:spin 9s linear infinite;box-shadow:0 0 22px rgba(139,123,255,.6)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.add{display:flex;gap:6px}
+.subj{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;cursor:pointer;border:1px solid transparent;transition:.3s var(--ease)}
+.subj span{flex:1;font-weight:500}
+.subj:hover{background:rgba(255,255,255,.06);transform:translateX(3px)}
+.subj.on{background:linear-gradient(90deg,color-mix(in srgb,var(--c) 24%,transparent),rgba(255,255,255,.03));border-color:color-mix(in srgb,var(--c) 45%,transparent)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c)}
+.subj small{color:var(--mute);background:rgba(255,255,255,.08);border-radius:20px;padding:0 8px;font-size:12px}
+main{position:relative;padding:38px clamp(18px,4.5vw,64px);max-width:980px;width:100%}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.head h2{font-size:clamp(30px,5vw,46px);line-height:1.1;background:linear-gradient(115deg,#fff 30%,var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tabs{display:flex;gap:6px;margin:22px 0 24px;padding:5px;background:var(--panel);border:1px solid var(--line);border-radius:14px;width:fit-content;max-width:100%}
+.tab{position:relative;border:0;border-radius:10px;background:none;padding:8px 20px;color:var(--mute)}
+.tab:hover{background:none;color:var(--ink);transform:none}
+.tab.on{color:#fff;font-weight:600;background:linear-gradient(120deg,color-mix(in srgb,var(--c) 55%,#000),color-mix(in srgb,var(--c) 30%,#000));box-shadow:0 4px 18px -4px var(--c)}
+.card{background:var(--panel);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px;transition:.35s var(--ease)}
+.card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 50%,transparent);box-shadow:0 18px 40px -18px var(--c)}
+.row{display:flex;gap:10px;align-items:center}
+.note input{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:21px;border:0;padding:4px 0;background:none;box-shadow:none}
+.note textarea{min-height:140px;resize:vertical;border:0;padding:6px 0;background:none;box-shadow:none;line-height:1.7}
+.meta{color:var(--mute);font-size:13px}
+.rem span{flex:1;transition:.3s}
+.rem.done span{text-decoration:line-through;color:var(--mute)}
+.rem.done{opacity:.6}
+.late{color:var(--warn);font-weight:600}
+input[type=checkbox]{appearance:none;flex:none;width:24px;height:24px;padding:0;border-radius:50%;cursor:pointer;display:grid;place-items:center}
+input[type=checkbox]:checked{background:linear-gradient(135deg,var(--c),#3fd8e8);border-color:transparent;animation:pop .4s var(--ease)}
+input[type=checkbox]::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);margin-top:-2px;transition:.3s var(--ease)}
+input[type=checkbox]:checked::after{transform:rotate(45deg) scale(1)}
+@keyframes pop{50%{transform:scale(1.25)}}
+.drop{display:block;border:2px dashed rgba(255,255,255,.18);border-radius:18px;padding:38px 20px;text-align:center;color:var(--mute);margin-bottom:18px;cursor:pointer;transition:.3s var(--ease)}
+.drop:hover,.drop.over{border-color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);color:var(--ink);transform:scale(1.01)}
+.empty{color:var(--mute);padding:34px 0;text-align:center}
+.empty h2{color:var(--ink);margin-bottom:8px;font-size:34px}
+.anim>*{animation:rise .7s var(--ease) both}
+.anim>:nth-child(2){animation-delay:.07s}.anim>:nth-child(3){animation-delay:.14s}.anim>:nth-child(4){animation-delay:.21s}
+.anim>:nth-child(5){animation-delay:.28s}.anim>:nth-child(6){animation-delay:.35s}.anim>:nth-child(n+7){animation-delay:.42s}
+@keyframes rise{from{opacity:0;transform:translateY(20px) scale(.98)}}
+::-webkit-scrollbar{width:9px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:9px}
+@media(max-width:760px){.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="aurora"><i></i><i></i><i></i></div>
+<div class="app">
+  <aside>
+    <h1><b class="logo"></b>Lëndët e mia</h1>
+    <form class="add" id="addForm"><input id="newSubj" placeholder="Emri i lëndës…" aria-label="Emri i lëndës" required><button class="p">Shto</button></form>
+    <div id="list"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+/* ===== Të dhënat: shënime & kujtesa në localStorage, skedarët në IndexedDB ===== */
+const KEY = 'lendet_v1'; let anim = 1;
+const COLS = ['#8b7bff','#3fd8e8','#ff7ab6','#f3c677','#5be3a0','#ff9a62'];
+let db = { subjects: [], active: null, tab: 'notes' };
+try { db = Object.assign(db, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) { alert('Ruajtja dështoi.'); } };
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const cur = () => db.subjects.find(s => s.id === db.active);
+
+let idb;
+const idbReady = new Promise((res, rej) => {
+  const r = indexedDB.open('lendet_files', 1);
+  r.onupgradeneeded = () => r.result.createObjectStore('files', { keyPath: 'id' }).createIndex('sid', 'sid');
+  r.onsuccess = () => { idb = r.result; res(); };
+  r.onerror = rej;
+});
+const tx = (mode, fn) => new Promise((res, rej) => {
+  const t = idb.transaction('files', mode), st = t.objectStore('files'), q = fn(st);
+  t.oncomplete = () => res(q && q.result); t.onerror = rej;
+});
+const filesOf = sid => tx('readonly', st => st.index('sid').getAll(sid));
+
+/* ===== Lëndët ===== */
+document.getElementById('addForm').onsubmit = e => {
+  e.preventDefault();
+  const inp = document.getElementById('newSubj'), name = inp.value.trim();
+  if (!name) return;
+  const s = { id: uid(), name, notes: [], rem: [] };
+  db.subjects.push(s); db.active = s.id; db.tab = 'notes'; anim = 1; inp.value = ''; save(); render();
+};
+function pick(id) { anim = 1; db.active = id; save(); render(); }
+function rename() {
+  const s = cur(), n = prompt('Emri i ri i lëndës:', s.name);
+  if (n && n.trim()) { s.name = n.trim(); save(); render(); }
+}
+async function delSubj() {
+  const s = cur();
+  if (!confirm(`Të fshihet "${s.name}" bashkë me gjithçka brenda?`)) return;
+  await idbReady;
+  for (const f of await filesOf(s.id)) await tx('readwrite', st => st.delete(f.id));
+  db.subjects = db.subjects.filter(x => x.id !== s.id);
+  db.active = db.subjects[0] ? db.subjects[0].id : null; save(); render();
+}
+const setTab = t => { anim = 1; db.tab = t; save(); render(); };
+
+/* ===== Shënime ===== */
+const addNote = () => { cur().notes.unshift({ id: uid(), title: '', text: '', t: Date.now() }); save(); render(); };
+function editNote(id, k, v) { const n = cur().notes.find(n => n.id === id); n[k] = v; n.t = Date.now(); save(); }
+function delNote(id) { if (confirm('Të fshihet shënimi?')) { cur().notes = cur().notes.filter(n => n.id !== id); save(); render(); } }
+
+/* ===== Kujtesa ===== */
+function addRem(e) {
+  e.preventDefault();
+  const f = e.target, text = f.text.value.trim();
+  if (!text) return;
+  cur().rem.push({ id: uid(), text, date: f.date.value, done: false });
+  save(); render();
+}
+function togRem(id) { const r = cur().rem.find(r => r.id === id); r.done = !r.done; save(); render(); }
+function delRem(id) { cur().rem = cur().rem.filter(r => r.id !== id); save(); render(); }
+
+/* ===== Skedarë ===== */
+async function upload(fileList) {
+  await idbReady;
+  for (const f of fileList) await tx('readwrite', st => st.put({ id: uid(), sid: db.active, name: f.name, type: f.type, size: f.size, t: Date.now(), blob: f }));
+  render();
+}
+async function openFile(id) {
+  await idbReady;
+  const f = await tx('readonly', st => st.get(id));
+  window.open(URL.createObjectURL(f.blob), '_blank');
+}
+async function dlFile(id) {
+  await idbReady;
+  const f = await tx('readonly', st => st.get(id));
+  const a = document.createElement('a'); a.href = URL.createObjectURL(f.blob); a.download = f.name; a.click();
+}
+async function delFile(id) { if (confirm('Të fshihet skedari?')) { await tx('readwrite', st => st.delete(id)); render(); } }
+const size = b => b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+const fmt = t => new Date(t).toLocaleDateString('sq-AL', { day: 'numeric', month: 'short', year: 'numeric' });
+
+/* ===== Pamja ===== */
+async function render() {
+  document.getElementById('list').innerHTML = db.subjects.map((s, i) =>
+    `<div class="subj ${s.id === db.active ? 'on' : ''}" style="--c:${COLS[i % COLS.length]}" onclick="pick('${s.id}')"><i class="dot"></i><span>${esc(s.name)}</span><small>${s.notes.length}</small></div>`).join('')
+    || '<div class="meta">Shto lëndën e parë më sipër.</div>';
+  const m = document.getElementById('main'), s = cur();
+  if (!s) { m.className = 'anim'; m.innerHTML = '<div class="empty"><h2>Mirë se erdhe</h2><p>Shkruaj emrin e një lënde (p.sh. Drejtim bankar) dhe shtyp “Shto”. Brenda çdo lënde do të kesh shënime, kujtesa dhe skedarë.</p></div>'; return; }
+  const tabs = [['notes', 'Shënime'], ['rem', 'Kujtesa'], ['files', 'Skedarë']];
+  let body = '';
+  if (db.tab === 'notes') {
+    body = `<button class="p" onclick="addNote()">+ Shënim i ri</button><div style="height:14px"></div>` +
+      (s.notes.map(n => `<div class="card note"><div class="row"><input value="${esc(n.title)}" placeholder="Titulli" oninput="editNote('${n.id}','title',this.value)"><button class="x" onclick="delNote('${n.id}')">Fshi</button></div>
+        <textarea placeholder="Shkruaj shënimet këtu…" oninput="editNote('${n.id}','text',this.value)">${esc(n.text)}</textarea><div class="meta">Ndryshuar më ${fmt(n.t)}</div></div>`).join('') || '<div class="empty">Ende asnjë shënim. Shtyp “+ Shënim i ri”.</div>');
+  } else if (db.tab === 'rem') {
+    const today = new Date().toISOString().slice(0, 10);
+    const rs = [...s.rem].sort((a, b) => a.done - b.done || (a.date || '9') .localeCompare(b.date || '9'));
+    body = `<form class="card row" onsubmit="addRem(event)"><input name="text" placeholder="Çfarë duhet të kujtosh?" required><input name="date" type="date" style="width:170px"><button class="p">Shto</button></form>` +
+      (rs.map(r => `<div class="card row rem ${r.done ? 'done' : ''}"><input type="checkbox" ${r.done ? 'checked' : ''} onchange="togRem('${r.id}')"><span>${esc(r.text)}</span>
+        ${r.date ? `<small class="${!r.done && r.date < today ? 'late' : 'meta'}">${!r.done && r.date < today ? 'Ka kaluar · ' : ''}${fmt(r.date)}</small>` : ''}<button class="x" onclick="delRem('${r.id}')">Fshi</button></div>`).join('') || '<div class="empty">Asnjë kujtesë. Shto afatet e detyrave dhe provimeve.</div>');
+  } else {
+    await idbReady;
+    const fs = (await filesOf(s.id)).sort((a, b) => b.t - a.t);
+    body = `<label class="drop" id="drop">Tërhiq skedarët këtu ose <b>kliko për të zgjedhur</b><input type="file" id="fi" multiple hidden></label>` +
+      (fs.map(f => `<div class="card row"><span style="flex:1"><b>${esc(f.name)}</b><br><span class="meta">${size(f.size)} · ${fmt(f.t)}</span></span>
+        <button onclick="openFile('${f.id}')">Hap</button><button onclick="dlFile('${f.id}')">Shkarko</button><button class="x" onclick="delFile('${f.id}')">Fshi</button></div>`).join('') || '<div class="empty">Ende asnjë skedar për këtë lëndë.</div>');
+  }
+  m.innerHTML = `<div class="head"><h2>${esc(s.name)}</h2><div><button onclick="rename()">Riemërto</button> <button class="x" onclick="delSubj()">Fshi lëndën</button></div></div>
+    <div class="tabs">${tabs.map(([k, l]) => `<button class="tab ${db.tab === k ? 'on' : ''}" onclick="setTab('${k}')">${l}</button>`).join('')}</div>${body}`;
+  m.className = anim ? 'anim' : ''; anim = 0;
+  m.style.setProperty('--c', COLS[db.subjects.indexOf(s) % COLS.length]);
+  if (db.tab === 'files') {
+    const d = document.getElementById('drop'), fi = document.getElementById('fi');
+    fi.onchange = () => upload(fi.files);
+    d.ondragover = e => { e.preventDefault(); d.classList.add('over'); };
+    d.ondragleave = () => d.classList.remove('over');
+    d.ondrop = e => { e.preventDefault(); upload(e.dataTransfer.files); };
+  }
+}
+render();
+</script>
+</body>
+</html>
